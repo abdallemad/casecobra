@@ -1,0 +1,8 @@
+{
+  "build": {
+    "env": {
+      "DATABASE_URL": "@your-database-url"
+    }
+  },
+  "buildCommand": "pnpm run build && pnpm prisma generate"
+}
