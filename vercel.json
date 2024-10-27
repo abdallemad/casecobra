@@ -1,8 +1,8 @@
 {
   "build": {
     "env": {
-      "DATABASE_URL": "@your-database-url"
+      "DATABASE_URL": "mongodb+srv://abdalla:12345@cluster0.stf3o.mongodb.net/CASEE_COBRA?retryWrites=true&w=majority&appName=Cluster0"
     }
   },
-  "buildCommand": "pnpm run build && pnpm prisma generate"
+  "buildCommand": "prisma db push && next build"
 }

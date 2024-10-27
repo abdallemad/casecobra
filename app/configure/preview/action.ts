@@ -10,7 +10,6 @@ export const createCheckOutSession = async ({
 }: {
   configId: string;
 }) => {
-
   const configuration = await db.configuration.findUnique({
     where: { id: configId },
   });
@@ -21,7 +20,8 @@ export const createCheckOutSession = async ({
 
   let price = BASE_PRICE;
   if (configuration.finish == "texture") price += PRICES.finish.texture;
-  if (configuration.material === "polycarbonate") price += PRICES.materials.polyCarbonate;
+  if (configuration.material === "polycarbonate")
+    price += PRICES.materials.polyCarbonate;
 
   let order: Order | undefined = undefined;
 
@@ -48,7 +48,7 @@ export const createCheckOutSession = async ({
   });
 
   const stripeSession = await stripe.checkout.sessions.create({
-    success_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/thank-you?orderId=${configuration.id}`,
+    success_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/thank-you?orderId=${order.id}`,
     cancel_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/configure/preview?id=${configuration.id}`,
     payment_method_types: ["card"],
     mode: "payment",

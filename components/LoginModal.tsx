@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import type { Dispatch, SetStateAction } from "react";
 import {
   Dialog,
@@ -19,7 +19,7 @@ export default function LoginModal({
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
 }) {
-  console.log(isOpen)
+  console.log(isOpen);
   return (
     <Dialog open={isOpen} defaultOpen={false} onOpenChange={setIsOpen}>
       {/* <DialogTrigger>Open</DialogTrigger> */}
@@ -33,17 +33,22 @@ export default function LoginModal({
               fill
             />
           </div>
-          <DialogTitle className="text-3xl text-center font-bold tracking-tight">Log in to continue</DialogTitle>
+          <DialogTitle className="text-3xl text-center font-bold tracking-tight">
+            Log in to continue
+          </DialogTitle>
           <DialogDescription className="text-base text-center py-2">
-            <span className="font-medium text-zinc-900 ">Your configuration is saved! </span>Please login or create an account to complete your purchase.
+            <span className="font-medium text-zinc-900 ">
+              Your configuration is saved!{" "}
+            </span>
+            Please login or create an account to complete your purchase.
           </DialogDescription>
         </DialogHeader>
         <div className="grid grid-cols-2 gap-6 divide-x divide-gray-200">
-          <Button asChild variant={'outline'}>
-            <LoginLink >Login</LoginLink>
+          <Button asChild variant={"outline"}>
+            <LoginLink>Login</LoginLink>
           </Button>
           <Button asChild>
-            <RegisterLink >Register</RegisterLink>
+            <RegisterLink>Register</RegisterLink>
           </Button>
         </div>
       </DialogContent>

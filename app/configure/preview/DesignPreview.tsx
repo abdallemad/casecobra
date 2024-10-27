@@ -13,7 +13,7 @@ import {
 } from "@/validator/options-validator";
 import { Configuration } from "@prisma/client";
 import { useMutation } from "@tanstack/react-query";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, LoaderIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { createCheckOutSession } from "./action";
 import Confetti from "react-dom-confetti";
@@ -42,6 +42,7 @@ export default function DesignPreview({
   const router = useRouter();
   const { toast } = useToast();
   const { user } = useKindeBrowserClient();
+  const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
   useEffect(() => setShowConfetti(true), []);
@@ -57,7 +58,7 @@ export default function DesignPreview({
   const tw = COLORS.find(
     (colorOption) => colorOption.value === configuration.color
   )!.tw;
-  
+
   const { mutate: createPaymentSession } = useMutation({
     mutationKey: ["get-checkout-session"],
     mutationFn: createCheckOutSession,
@@ -73,15 +74,15 @@ export default function DesignPreview({
       });
     },
   });
-  
+
   const handelCheckout = () => {
     if (user) {
+      setIsLoading(true);
       createPaymentSession({ configId: configuration.id });
-      console.log('if statement')
     } else {
       localStorage.setItem("configurationId", configuration.id);
       setIsOpen(true);
-      console.log('else statement')
+      setIsLoading(false);
     }
   };
   return (
@@ -175,10 +176,18 @@ export default function DesignPreview({
               <Button
                 className="px-4 sm:px-6 lg:px-8"
                 onClick={handelCheckout}
+                disabled={isLoading}
               >
-                <>
-                  Checkout <ArrowRight className="w-4 h-4 ml-1.5 inline " />
-                </>
+                {isLoading ? (
+                  <>
+                    <LoaderIcon className="animate-spin" />
+                    saving...
+                  </>
+                ) : (
+                  <>
+                    Checkout <ArrowRight className="w-4 h-4 ml-1.5 inline " />
+                  </>
+                )}
               </Button>
             </div>
           </div>

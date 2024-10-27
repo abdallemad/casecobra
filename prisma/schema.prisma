@@ -63,6 +63,7 @@ model User {
   email     String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  Order     Order[]
 }
 
 model Order {
@@ -70,6 +71,7 @@ model Order {
   configurationId   String           @db.ObjectId
   configuration     Configuration    @relation(fields: [configurationId], references: [id])
   userId            String
+  user              User             @relation(fields: [userId], references: [userId])
   amount            Float
   isPaid            Boolean          @default(false)
   status            OrderStatus      @default(waiting_shipment)
